@@ -1,22 +1,22 @@
 interface Student {
-        firstName: string;
-        lastName: string;
-        age: number;
-        location: string;
+    firstName: string;
+    lastName: string;
+    age: number;
+    location: string;
 }
 
 const student1: Student = {
-        firstName: 'John',
-        lastName: 'Mark',
-        age: 20,
-        location: 'New York'
+    firstName: 'John',
+    lastName: 'Mark',
+    age: 20,
+    location: 'New York'
 };
   
 const student2: Student = {
-        firstName: 'Jane',
-        lastName: 'Stephen',
-        age: 22,
-        location: 'Los Angeles'
+    firstName: 'Jane',
+    lastName: 'Stephen',
+    age: 22,
+    location: 'Los Angeles'
 };
 
 // Array containing the two students
