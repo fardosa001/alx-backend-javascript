@@ -3,7 +3,10 @@ const fs = require('fs');
 function countStudents (path) {
   const promise = (res, rej) => {
     fs.readFile(path, 'utf8', (error, data) => {
-      if (error) rej(Error('Cannot load the database'));
+      if (error) {
+        rej(new Error('Cannot load the database'));
+        return;
+      }
       const messages = [];
       let message;
       const content = data.toString().split('\n');
