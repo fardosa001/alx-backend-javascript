@@ -1,34 +1,36 @@
 const fs = require('fs');
 
 function countStudents (path) {
-  return new Promise((resolve, reject) => {
-    fs.readFile(path, 'utf8', (err, data) => {
-      if (err) {
-        reject(new Error('Cannot load the database'));
-        return;
-      }
-
-      const lines = data.split('\n').filter(line => line.trim() !== '');
-      const students = lines.map(line => line.split(','));
-
-      const countByField = {};
-      students.forEach(student => {
-        const field = student[3];
-        if (!countByField[field]) {
-          countByField[field] = [];
+  const promise = (res, rej) => {
+    fs.readFile(path, 'utf8', (error, data) => {
+      if (error) rej(Error('Cannot load the database'));
+      const messages = [];
+      let message;
+      const content = data.toString().split('\n');
+      let students = content.filter((item) => item);
+      students = students.map((item) => item.split(','));
+      const nStudents = students.length ? students.length - 1 : 0;
+      message = `Number of students: ${nStudents}`;
+      console.log(message);
+      messages.push(message);
+      const subjects = {};
+      for (const i in students) {
+        if (i !== 0) {
+          if (!subjects[students[i][3]]) subjects[students[i][3]] = [];
+          subjects[students[i][3]].push(students[i][0]);
         }
-        countByField[field].push(student[0]);
-      });
-
-      const totalCount = students.length;
-      console.log(`Number of students: ${totalCount}`);
-
-      for (const field in countByField) {
-        console.log(`Number of students in ${field}: ${countByField[field].length}. List: ${countByField[field].join(', ')}`);
       }
-
-      resolve();
+      delete subjects.subject;
+      for (const key of Object.keys(subjects)) {
+        message = `Number of students in ${key}: ${
+          subjects[key].length
+        }. List: ${subjects[key].join(', ')}`;
+        console.log(message);
+        messages.push(message);
+      }
+      res(messages);
     });
-  });
+  };
+  return new Promise(promise);
 }
 module.exports = countStudents;
