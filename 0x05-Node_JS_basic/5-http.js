@@ -23,5 +23,8 @@ const app = http.createServer((req, res) => {
 });
 
 app.listen(1245);
+<<<<<<< HEAD
 
+=======
+>>>>>>> c12cef803d6668048cd06bfa1d9f3dde484c515f
 module.exports = app;
